@@ -8,6 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="api_functs.js"></script>
 </head>
 <body>
 
@@ -16,11 +17,17 @@
     <div class="col-sm-2">
       <ul class="list-group">
 		  <li class="list-group-item">
-			<Image src="" width="100"/><br>Cras justo odio</li>
-		  <li class="list-group-item">Dapibus ac facilisis in</li>
-		  <li class="list-group-item">Morbi leo risus</li>
-		  <li class="list-group-item">Porta ac consectetur ac</li>
-		  <li class="list-group-item">Vestibulum at eros</li>
+			<Image src="" width="100"/><br>Brandy</li>
+		  <li class="list-group-item">
+			<Image src="" width="100"/><br>Gin</li>
+		  <li class="list-group-item">
+			<Image src="" width="100"/><br>Rum</li>
+		  <li class="list-group-item">
+			<Image src="" width="100"/><br>Tequila</li>
+		  <li class="list-group-item">
+			<Image src="" width="100"/><br>Vodka</li>
+		  <li class="list-group-item">
+			<Image src="" width="100"/><br>Whiskey</li>
 		</ul>
     </div>
     <div class="col-sm-10">
