@@ -16,7 +16,7 @@
   <div class="row">
     <div class="col-sm-2">
       <ul class="list-group">
-		  <li class="list-group-item">
+		  <li class="list-group-item" onClick="getCategory('randy');">
 			<Image src="" width="100"/><br>Brandy</li>
 		  <li class="list-group-item">
 			<Image src="" width="100"/><br>Gin</li>
