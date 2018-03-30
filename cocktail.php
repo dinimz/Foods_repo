@@ -8,26 +8,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="api_functs.js"></script>
+  
 </head>
 <body>
 
 <div class="container">
   <div class="row">
     <div class="col-sm-2">
-      <ul class="list-group">
-		  <li class="list-group-item" onClick="getCategory('randy');">
-			<Image src="" width="100"/><br>Brandy</li>
-		  <li class="list-group-item">
-			<Image src="" width="100"/><br>Gin</li>
-		  <li class="list-group-item">
-			<Image src="" width="100"/><br>Rum</li>
-		  <li class="list-group-item">
-			<Image src="" width="100"/><br>Tequila</li>
-		  <li class="list-group-item">
-			<Image src="" width="100"/><br>Vodka</li>
-		  <li class="list-group-item">
-			<Image src="" width="100"/><br>Whiskey</li>
+      <ul class="list-group" id="categories">
+		  
 		</ul>
     </div>
     <div class="col-sm-10">
@@ -35,6 +24,6 @@
     </div>
   </div>
 </div>
-
+<script src="api_functs.js"></script>
 </body>
 </html> 
