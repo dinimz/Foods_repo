@@ -1,6 +1,6 @@
 var pageIndex = 0;
 function getCategory(cat){
-	document.getElementById("main_container").innerHTML = "";
+	document.getElementById("main_container").innerHTML = "<h2 class='sel-matching'>Aquiring data, please wait...</h2>";
 	var xhr = (window.XMLHttpRequest)? new XMLHttpRequest(): new activeXObject("Microsoft.XMLHTTP");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==4 && xhr.status==200){
@@ -12,13 +12,27 @@ function getCategory(cat){
 	xhr.send();
 }
 
-function getIngredient(cat,step){
-	var itemsGrid = document.getElementById("items_grid");
-	itemsGrid.innerHTML = "";
+function getIngredient(cat, step, elm){
+	var itemsGrid = document.getElementById("mi-display-content");
+	itemsGrid.innerHTML = "<h2 class='sel-matching'>Matching your selections, please wait...</h2>";
+	var prevElem = document.getElementById("selection_preview_" + step);
 	switch(step){
 		case 1 : document.getElementById("step_name").innerHTML = "Choose your suppliment 1"; break;
 		case 2 : document.getElementById("step_name").innerHTML = "Choose your suppliment 2"; break;
 		case 3 : document.getElementById("step_name").innerHTML = "Choose your suppliment 3"; break;
+	}
+	if(elm != null){
+		var destImg = elm.childNodes[0].getElementsByTagName("img")[0].getAttribute("src");
+		var destName = elm.childNodes[0].getElementsByTagName("h4")[0].innerHTML;
+		prevElem.getElementsByTagName("img")[0].setAttribute("src", destImg);
+		prevElem.getElementsByTagName("h4")[0].innerHTML = destName;
+	}
+	else{
+		for(h = step + 1; h < 4;  h++){
+			prevElem = document.getElementById("selection_preview_" + h);
+			prevElem.getElementsByTagName("img")[0].setAttribute("src", "images/emptyPlace.png");
+			prevElem.getElementsByTagName("h4")[0].innerHTML = "Not Selected";
+		}
 	}
 	var xhr = (window.XMLHttpRequest)? new XMLHttpRequest(): new activeXObject("Microsoft.XMLHTTP");
 	xhr.onreadystatechange = function(){
@@ -37,7 +51,7 @@ function getIngredient(cat,step){
 		stepNavigation[i].setAttribute("onClick","");
 	}
 	if(step < 4){
-		stepNavigation[step].setAttribute("onClick","getIngredient(" + cat + "," + step + ");");
+		stepNavigation[step].setAttribute("onClick","getIngredient(" + cat + "," + step + " ,null);");
 	}
 }
 

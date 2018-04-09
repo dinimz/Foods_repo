@@ -3,6 +3,7 @@ session_start();
 $appID = "65e26464";
 $appKey = "c36b1cb49a17114be31f8e18a0da6361" ;
 $categoryList = [[],[38],[357],[437,575]];
+$elmsPerPage = 5;
 
 if(!isset($_SESSION["selected"])) $_SESSION["selected"] = [0,0,0,0];
 $id = $_GET["id"];
@@ -16,31 +17,56 @@ if($function == "getSub"){ //get sub categories
 		$pairings .= "," . $_SESSION["selected"][$i];
 	}
 	$all = getIngredients($pairings, $step);
-	if(count($all) == 0)
-		echo '<h4>Sorry, No matches found!</h4>';
-	for($i = 0; $i < count($all) ; $i++){
-		if($step == 3)
-			echo "<li onClick='goToNextStage(" . $all[$i][0] . ");'><a><img src='".$all[$i][2]."' alt='".$all[$i][1]."'><h4>".$all[$i][1]."</h4></a></li>";
-		else
-			echo "<li onClick='getIngredient(" . $all[$i][0] . ",". ($step + 1) .");'><a><img src='".$all[$i][2]."' alt='".$all[$i][1]."'><h4>".$all[$i][1]."</h4></a></li>";
-	}
-}
-else{ //get main categories, load the whole page
-	$liquorList = getLiquor($id);
-	echo "<div id='mi-slider' class='mi-slider'>";
-	echo '<table><tr><td width="100px" align="right">';
+	echo '<tr><td width="100px" align="right">';
 	echo '<div class="page_button" style="display:none" id="page-left-btn" onclick="prevPage();"><span class="fa fa-angle-left page_button_inner" style="margin-right: 30px;"></span></div>';
-	echo "</td><td><ul class='mi-current' id='items_grid'>";
-	$total = count($liquorList);
-	$numPages = intval($total/8);
-	if($numPages * 8 < $total ) $numPages++;
+	if(count($all) == 0){
+		echo '</td><td><h2 class=\'sel-matching\'>Sorry, No matches found!</h2>';
+	}
+	else{
+		echo "</td><td><ul class='mi-current' id='items_grid'>";
+	}
+	$total = count($all);
+	$numPages = intval($total/$elmsPerPage);
+	if($numPages * $elmsPerPage < $total ) $numPages++;
 	for($i = 0; $i < $numPages ; $i++){
 		if($i == 0)
 			echo '<div class="listPage selected-page">';
 		else 
 			echo '<div class="listPage">';
-		for($j = $i * 8; $j < $total && $j < ($i * 8) + 8; $j++){
-			echo "<li onClick='getIngredient(" . $liquorList[$j][0] . ",1);'><a><img src='".$liquorList[$j][2]."' alt='".$liquorList[$j][1]."'><h4>".$liquorList[$j][1]."</h4></a></li>";
+		for($j = $i * $elmsPerPage; $j < $total && $j < ($i * $elmsPerPage) + $elmsPerPage; $j++){
+			if($step == 3)
+			echo "<li onClick='goToNextStage(" . $all[$j][0] . ");'><a><img src='".$all[$j][2]."' alt='".$all[$j][1]."'><h4>".$all[$j][1]."</h4></a></li>";
+		else
+			echo "<li onClick='getIngredient(" . $all[$j][0] . ",". ($step + 1) ." ,this);'><a><img src='".$all[$j][2]."' alt='".$all[$j][1]."'><h4>".$all[$j][1]."</h4></a></li>";
+		}
+		echo '</div>';
+	}
+	if(count($all) == 0){
+		echo '</td><td width="100px">';
+	}
+	else{
+		echo '</ul></td><td width="100px">';
+	}
+	$nextDisplay = ($numPages > 1) ? "block": "none";
+	echo '<div class="page_button" style="display:'.$nextDisplay.'" id="page-right-btn" onclick="nextPage();"><span class="fa fa-angle-right page_button_inner" style="margin-left: 30px;"></span></div>';
+	echo '</td></tr></table>';
+}
+else{ //get main categories, load the whole page
+	$liquorList = getLiquor($id);
+	echo "<div id='mi-slider' class='mi-slider'>";
+	echo '<table id="mi-display-content"><tr><td width="100px" align="right">';
+	echo '<div class="page_button" style="display:none" id="page-left-btn" onclick="prevPage();"><span class="fa fa-angle-left page_button_inner" style="margin-right: 30px;"></span></div>';
+	echo "</td><td><ul class='mi-current' id='items_grid'>";
+	$total = count($liquorList);
+	$numPages = intval($total/$elmsPerPage);
+	if($numPages * $elmsPerPage < $total ) $numPages++;
+	for($i = 0; $i < $numPages ; $i++){
+		if($i == 0)
+			echo '<div class="listPage selected-page">';
+		else 
+			echo '<div class="listPage">';
+		for($j = $i * $elmsPerPage; $j < $total && $j < ($i * $elmsPerPage) + $elmsPerPage; $j++){
+			echo "<li onClick='getIngredient(" . $liquorList[$j][0] . ",1 ,this);'><a><img src='".$liquorList[$j][2]."' alt='".$liquorList[$j][1]."'><h4>".$liquorList[$j][1]."</h4></a></li>";
 		}
 		echo '</div>';
 	}
@@ -54,8 +80,14 @@ else{ //get main categories, load the whole page
 			<a class='steps'>Suppliment 1</a>
 			<a class='steps'>Suppliment 2</a>
 			<a class='steps'>Suppliment 3</a>
-		</nav>
-	</div>";
+		</nav>";
+		
+	echo "<ul  id='selections_grid'>";
+	echo "<li><a id='selection_preview_1'><img src='images/emptyPlace.png' alt='Liquor'><h4>Not Selected</h4></a></li>";
+	echo "<li><a id='selection_preview_2'><img src='images/emptyPlace.png' alt='Suppliment 1'><h4>Not Selected</h4></a></li>";
+	echo "<li><a id='selection_preview_3'><img src='images/emptyPlace.png' alt='Suppliment 2'><h4>Not Selected</h4></a></li>";
+	echo "<li><a id='selection_preview_4'><img src='images/emptyPlace.png' alt='Suppliment 3'><h4>Not Selected</h4></a></li>";
+	echo "</ul>";
 }
 
 function getLiquor($id){
@@ -75,6 +107,7 @@ function getLiquor($id){
         curl_close($curl);
         $liquorList    = json_decode($curl_response);
 		$returnArr = [];
+		
 		for ($i = 0 ; $i < count($liquorList); $i++){
 			$item = $liquorList[$i];
 			if(strpos(strtolower($item->name),strtolower($id)) != False)

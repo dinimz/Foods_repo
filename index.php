@@ -73,6 +73,31 @@
 				cursor:beam;
 			}
 				
+			#mi-display-content{
+				width:100%;
+			}
+			
+			.sel-matching{
+				text-align: center;
+				margin-top: 40px;
+				margin-bottom: 40px;
+				color: Gray;
+			}
+			#selections_grid li{
+				webkit-transform: unset;
+				transform: unset;
+			}
+			#selections_grid li a img{
+				width: 100px;
+			}
+			
+			.mi-slider ul li h4{
+				padding: 0px !important;
+			}
+			
+			.main {
+				padding-bottom: 80px !important;
+			}
 		</style>
 	</head>
 	<body>
