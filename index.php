@@ -17,14 +17,18 @@
 		<script src="js/modernizr.custom.63321.js"></script>
 		<style>
 			.base_liquor_img{
-				position: absolute;
+				position: relative;
 				cursor:pointer;
 				transition: color 0.5s linear;
+				display:inline-block;
+				max-height:150px;
+				max-width:80px;
+				margin-bottom:0px;
 			}
 			
 			.base_liquor_label{
 				position: absolute;
-				color:White;
+				color:Black;
 				font-weight:bolder;
 				display:none;
 				transition: color 0.5s linear;
@@ -87,8 +91,9 @@
 				webkit-transform: unset;
 				transform: unset;
 			}
-			#selections_grid li a img{
-				width: 100px;
+			#selections_grid div a img{
+				width: 30%;
+				display:block;
 			}
 			
 			.mi-slider ul li h4{
@@ -97,6 +102,10 @@
 			
 			.main {
 				padding-bottom: 80px !important;
+			}
+			
+			#cocktail_glass{
+				
 			}
 		</style>
 	</head>
@@ -108,34 +117,44 @@
 				<a href="http://tympanus.net/Development/SliderPagination/"><strong>&laquo; Previous Demo: </strong>Slider Pagination Concept</a>
 				<span class="right"><a href="http://tympanus.net/codrops/?p=13218"><strong>Back to the Codrops Article</strong></a></span>
 			</div><!--/ Codrops top bar -->
-			<header class="clearfix">
-				<h1>Let's Make Your Cocktail <span id="step_name">Choose your base liquor</span></h1>
-			</header>
+			
 			<div class="main" id="main_container">
-				<img src="images/table.jpg" width="1000px" class="table"/>
-				<div class="base_liquor" onclick="getCategory('Brandy');">
-					<img src="images/Brandy.png" width="100px" class="base_liquor_img" style="left:150px; top:200px;"/>
-					<label class="base_liquor_label" style="left:100px; top:350px;">Brandy</label>
+				<div class="col-xs-9"> <!-- devide windows in to two, topic and selections-->
+					<div class="row-xs-2"> <!-- devide in to two, Topic-->
+						<header class="clearfix">
+							<h1>Let's Make Your Cocktail <span id="step_name">Choose your base liquor</span></h1>
+						</header>
+					</div>
+					<div class="row-xs-7" style="padding-top:50px;" id="selections"> <!-- devide in to two, Slections-->
+						<div class="base_liquor col-xs-2" onclick="getCategory('Brandy',this);">
+							<img src="images/Brandy.png" class="base_liquor_img"/>
+							<label class="base_liquor_label">Brandy</label>
+						</div>
+						<div class="base_liquor col-xs-2" onclick="getCategory('Vodka',this);">
+							<img src="images/Vodka.png" class="base_liquor_img"/>
+							<label class="base_liquor_label">Vodka</label>
+						</div>
+						<div class="base_liquor col-xs-2" onclick="getCategory('Rum',this);">
+							<img src="images/Rum.png" class="base_liquor_img"/>
+							<label class="base_liquor_label">Rum</label>
+						</div>
+						<div class="base_liquor col-xs-2" onclick="getCategory('Whiskey',this);">
+							<img src="images/Whiskey.png" class="base_liquor_img"/>
+							<label class="base_liquor_label">Whiskey</label>
+						</div>
+						<div class="base_liquor col-xs-2" onclick="getCategory('Gin',this);">
+							<img src="images/Gin.png" class="base_liquor_img"/>
+							<label class="base_liquor_label">Gin</label>
+						</div>
+						<div class="base_liquor col-xs-2" onclick="getCategory('Tequila',this);">
+							<img src="images/Tequila.png" class="base_liquor_img"/>
+							<label class="base_liquor_label">Tequila</label>
+						</div>
+					</div>
 				</div>
-				<div class="base_liquor" onclick="getCategory('Vodka');">
-					<img src="images/Vodka.png" width="100px" class="base_liquor_img" style="left:300px; top:150px;"/>
-					<label class="base_liquor_label" style="left:320px; top:370px;">Vodka</label>
-				</div>
-				<div class="base_liquor" onclick="getCategory('Rum');">
-					<img src="images/Rum.png" width="100px" class="base_liquor_img" style="left:500px; top:190px;"/>
-					<label class="base_liquor_label" style="left:560px; top:340px;">Rum</label>
-				</div>
-				<div class="base_liquor" onclick="getCategory('Whiskey');">
-					<img src="images/Whiskey.png" width="100px" class="base_liquor_img" style="left:650px; top:160px;"/>
-					<label class="base_liquor_label" style="left:610px; top:350px;">Whiskey</label>
-				</div>
-				<div class="base_liquor" onclick="getCategory('Gin');">
-					<img src="images/Gin.png" width="100px" class="base_liquor_img" style="left:400px; top:160px;"/>
-					<label class="base_liquor_label" style="left:500px; top:400px;">Gin</label>
-				</div>
-				<div class="base_liquor" onclick="getCategory('Tequila');">
-					<img src="images/Tequila.png" width="100px" class="base_liquor_img" style="left:800px; top:210px;"/>
-					<label class="base_liquor_label" style="left:760px; top:380px;">Tequila</label>
+				<img src="images/Brandy.png" id="anim-sample" class="base_liquor_img" style="display:none; position:absolute; left:10%; top:15%;"/>
+				<div class="col-xs-3"  id='selections_grid'> <!-- devide window in to two, All selections-->
+					
 				</div>
 			</div>
 		</div><!-- /container -->

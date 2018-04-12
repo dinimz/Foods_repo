@@ -13,6 +13,7 @@ $function = $_GET["funct"];
 if($function == "getSub"){ //get sub categories
 	$_SESSION["selected"][$step - 1] = $id;
 	$pairings = $_SESSION["selected"][0];
+	if($step == 4) return;
 	for($i = 1; $i < $step ; $i++){
 		$pairings .= "," . $_SESSION["selected"][$i];
 	}
@@ -34,9 +35,6 @@ if($function == "getSub"){ //get sub categories
 		else 
 			echo '<div class="listPage">';
 		for($j = $i * $elmsPerPage; $j < $total && $j < ($i * $elmsPerPage) + $elmsPerPage; $j++){
-			if($step == 3)
-			echo "<li onClick='goToNextStage(" . $all[$j][0] . ");'><a><img src='".$all[$j][2]."' alt='".$all[$j][1]."'><h4>".$all[$j][1]."</h4></a></li>";
-		else
 			echo "<li onClick='getIngredient(" . $all[$j][0] . ",". ($step + 1) ." ,this);'><a><img src='".$all[$j][2]."' alt='".$all[$j][1]."'><h4>".$all[$j][1]."</h4></a></li>";
 		}
 		echo '</div>';

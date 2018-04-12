@@ -1,58 +1,106 @@
 var pageIndex = 0;
-function getCategory(cat){
-	document.getElementById("main_container").innerHTML = "<h2 class='sel-matching'>Aquiring data, please wait...</h2>";
+var dataAquired = false;
+var animOver = false;
+var aqData = "";
+function getCategory(cat,elem){
 	var xhr = (window.XMLHttpRequest)? new XMLHttpRequest(): new activeXObject("Microsoft.XMLHTTP");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==4 && xhr.status==200){
 			document.getElementById("step_name").innerHTML = "Choose your liquor";
-			document.getElementById("main_container").innerHTML = xhr.responseText.trim();
+			document.getElementById("selections").innerHTML = xhr.responseText.trim();
 		}
 	}
 	xhr.open('get','stage1.php?id=' + cat + "&step=0&funct=basePage" ,true);
 	xhr.send();
+	$('#selections').animate({
+		opacity: "0"
+	},500, function(){
+		document.getElementById("selections").innerHTML = "<h2 class='sel-matching'>Aquiring data, please wait...</h2>";
+		$('#selections').animate({
+			opacity: "1"
+		},200);
+	});
 }
 
 function getIngredient(cat, step, elm){
+	animOver = false;;
+	aqData = "";
+	dataAquired = false;
 	var itemsGrid = document.getElementById("mi-display-content");
-	itemsGrid.innerHTML = "<h2 class='sel-matching'>Matching your selections, please wait...</h2>";
 	var prevElem = document.getElementById("selection_preview_" + step);
-	switch(step){
-		case 1 : document.getElementById("step_name").innerHTML = "Choose your suppliment 1"; break;
-		case 2 : document.getElementById("step_name").innerHTML = "Choose your suppliment 2"; break;
-		case 3 : document.getElementById("step_name").innerHTML = "Choose your suppliment 3"; break;
-	}
-	if(elm != null){
-		var destImg = elm.childNodes[0].getElementsByTagName("img")[0].getAttribute("src");
-		var destName = elm.childNodes[0].getElementsByTagName("h4")[0].innerHTML;
-		prevElem.getElementsByTagName("img")[0].setAttribute("src", destImg);
-		prevElem.getElementsByTagName("h4")[0].innerHTML = destName;
-	}
-	else{
-		for(h = step + 1; h < 4;  h++){
-			prevElem = document.getElementById("selection_preview_" + h);
-			prevElem.getElementsByTagName("img")[0].setAttribute("src", "images/emptyPlace.png");
-			prevElem.getElementsByTagName("h4")[0].innerHTML = "Not Selected";
-		}
-	}
 	var xhr = (window.XMLHttpRequest)? new XMLHttpRequest(): new activeXObject("Microsoft.XMLHTTP");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==4 && xhr.status==200){
-			itemsGrid.innerHTML = xhr.responseText.trim();
+			if(animOver){
+				itemsGrid.innerHTML = xhr.responseText.trim();
+			}
+			else{
+				aqData = xhr.responseText.trim();
+				dataAquired = true;
+			}
 		}
 	}
+	
 	xhr.open('get','stage1.php?id=' + cat + "&step="+ step +"&funct=getSub" ,true);
 	xhr.send();
-	var stepNavigation = document.getElementsByClassName("steps");
-	for(i = 0; i< stepNavigation.length; i++){
-		stepNavigation[i].classList.remove("mi-selected");
-	}
-	stepNavigation[step].classList.add("mi-selected");
-	for(i = step + 1; i < stepNavigation.length; i++){
-		stepNavigation[i].setAttribute("onClick","");
-	}
-	if(step < 4){
-		stepNavigation[step].setAttribute("onClick","getIngredient(" + cat + "," + step + " ,null);");
-	}
+	var animSample = document.getElementById("anim-sample");
+	var animOriginal = elm.childNodes[0].getElementsByTagName("img")[0];
+	var animDest = prevElem.getElementsByTagName("img")[0];
+	var rectOrg = animOriginal.getBoundingClientRect();
+	var rectDest = animDest.getBoundingClientRect();
+	animSample.setAttribute("src", animOriginal.getAttribute("src"));
+	animSample.setAttribute("style", "left : " + rectOrg.left + "px; " +
+									 "Top : " + rectOrg.top + "px; " +
+									 "display : block; position : absolute;");
+	//animation
+	$('#anim-sample').animate({
+		left: rectDest.left +"px",
+		top: rectDest.top +"px"
+	},500, function(){
+		animOver = true;
+		animSample.setAttribute("style", "display : none;");
+		//change sub topic
+		switch(step){
+			case 1 : document.getElementById("step_name").innerHTML = "Choose your suppliment 1"; break;
+			case 2 : document.getElementById("step_name").innerHTML = "Choose your suppliment 2"; break;
+			case 3 : document.getElementById("step_name").innerHTML = "Choose your suppliment 3"; break;
+		}
+		
+		if(elm != null){  //set the image
+			var destImg = elm.childNodes[0].getElementsByTagName("img")[0].getAttribute("src");
+			var destName = elm.childNodes[0].getElementsByTagName("h4")[0].innerHTML;
+			prevElem.getElementsByTagName("img")[0].setAttribute("src", destImg);
+			prevElem.getElementsByTagName("h4")[0].innerHTML = destName;
+		}
+		else{// clear images of the selected ingredients if returning form front
+			for(h = step + 1; h < 4;  h++){
+				prevElem = document.getElementById("selection_preview_" + h);
+				prevElem.getElementsByTagName("img")[0].setAttribute("src", "images/emptyPlace.png");
+				prevElem.getElementsByTagName("h4")[0].innerHTML = "Not Selected";
+			}
+		}
+		
+		var stepNavigation = document.getElementsByClassName("steps");
+		for(i = 0; i< stepNavigation.length; i++){
+			stepNavigation[i].classList.remove("mi-selected");
+		}
+		if(step != 4)
+			stepNavigation[step].classList.add("mi-selected");
+		for(i = step + 1; i < stepNavigation.length; i++){
+			stepNavigation[i].setAttribute("onClick","");
+		}
+		if(step < 4){
+			stepNavigation[step].setAttribute("onClick","getIngredient(" + cat + "," + step + " ,null);");
+		}
+		if(dataAquired){
+			itemsGrid.innerHTML = aqData;
+		}
+		else{
+			itemsGrid.innerHTML = "<h2 class='sel-matching'>Matching your selections, please wait...</h2>";
+		}
+	});
+	
+	
 }
 
 function goToNextStage(itm){
