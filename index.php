@@ -24,6 +24,7 @@
 				max-height:150px;
 				max-width:80px;
 				margin-bottom:0px;
+				vertical-align:bottom;
 			}
 			
 			.base_liquor_label{
@@ -45,7 +46,7 @@
 			}
 			
 			.table{
-				margin-top:100px;
+				height:500px;
 			}
 			
 			.page_button{
@@ -79,6 +80,7 @@
 				
 			#mi-display-content{
 				width:100%;
+				height: 200px;
 			}
 			
 			.sel-matching{
@@ -107,6 +109,42 @@
 			#cocktail_glass{
 				
 			}
+			
+			#prep_rec{
+				position: absolute;
+				top: 120px;
+				cursor: pointer;
+			}
+			
+			.prep_rec_btn{
+				display: inline-block;
+				font-size: 40px;
+				font-weight: bolder;
+				font-family: "Calibri";
+				vertical-align: -5px;
+				color:orange;
+			}
+			
+			.prep_rec_Img{
+				height: 50px;
+			}
+			
+			#recipe-pane{
+				opacity:0.0;
+				/*display:none;*/
+				float: right;
+				position: absolute;
+				left: 700px;
+				top: 80px;
+			}
+			
+			#recipe-svg{
+				position: absolute;
+				left: 220px;
+				top: 70px;
+			}
+			
+			
 		</style>
 	</head>
 	<body>
@@ -125,7 +163,7 @@
 							<h1>Let's Make Your Cocktail <span id="step_name">Choose your base liquor</span></h1>
 						</header>
 					</div>
-					<div class="row-xs-7" style="padding-top:50px;" id="selections"> <!-- devide in to two, Slections-->
+					<div class="row-xs-7" id="selections"> <!-- devide in to two, Slections-->
 						<div class="base_liquor col-xs-2" onclick="getCategory('Brandy',this);">
 							<img src="images/Brandy.png" class="base_liquor_img"/>
 							<label class="base_liquor_label">Brandy</label>

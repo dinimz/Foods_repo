@@ -13,7 +13,12 @@ $function = $_GET["funct"];
 if($function == "getSub"){ //get sub categories
 	$_SESSION["selected"][$step - 1] = $id;
 	$pairings = $_SESSION["selected"][0];
-	if($step == 4) return;
+	if($step == 4){
+		echo '<div  id="prep_rec" onClick=" goToNextStage(this);"><h4 class="prep_rec_btn">Prepare Recipe</h4><img src="images/prep_rec_btn.png" class="prep_rec_Img"/>';
+
+		return;
+	}
+	
 	for($i = 1; $i < $step ; $i++){
 		$pairings .= "," . $_SESSION["selected"][$i];
 	}
@@ -85,7 +90,17 @@ else{ //get main categories, load the whole page
 	echo "<li><a id='selection_preview_2'><img src='images/emptyPlace.png' alt='Suppliment 1'><h4>Not Selected</h4></a></li>";
 	echo "<li><a id='selection_preview_3'><img src='images/emptyPlace.png' alt='Suppliment 2'><h4>Not Selected</h4></a></li>";
 	echo "<li><a id='selection_preview_4'><img src='images/emptyPlace.png' alt='Suppliment 3'><h4>Not Selected</h4></a></li>";
-	echo "</ul>";
+	echo '</ul></div>
+	<div id="recipe-pane" >
+		<img src="images/co_glass.png" style="width:400px">
+		<svg height="210" width="400" style="/*! float: left; */position: absolute;left: 220px;top: 70px;">
+		  <path fill="green" d="M150 0 L0 120 L150 60 L600 60 L600 0 Z"></path>
+		  <text x="170" y="35" fill="white" font-family="Verdana" font-size="18">I love SVG!</text>
+		  
+		  <path fill="red" d="M150 60 L0 150 L150 120 L600 120 L600 60 Z"></path>
+		  <text x="170" y="35" fill="white" font-family="Verdana" font-size="18">I love SVG!</text>
+		</svg>
+	</div>';
 }
 
 function getLiquor($id){

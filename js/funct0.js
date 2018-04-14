@@ -21,6 +21,19 @@ function getCategory(cat,elem){
 		},200);
 	});
 }
+function animePrepRecBtn(){
+	console.log("anime");
+	var obj = document.getElementById("prep_rec");
+	var container = document.getElementById("mi-display-content");
+	var rectObj = obj.getBoundingClientRect();
+	var rectCont = container.getBoundingClientRect();
+	$('#prep_rec').animate({
+		left: (rectCont.width - rectObj.width -40) + "px"
+	},700);
+	var animRef = document.getElementById("mi-slider");
+	var rectRef = animRef.getBoundingClientRect();
+	document.getElementById("recipe-pane").style.left = (rectRef.left + rectRef.width + 100) + "px";
+}
 
 function getIngredient(cat, step, elm){
 	animOver = false;;
@@ -33,6 +46,7 @@ function getIngredient(cat, step, elm){
 		if(xhr.readyState==4 && xhr.status==200){
 			if(animOver){
 				itemsGrid.innerHTML = xhr.responseText.trim();
+				if(step == 4) animePrepRecBtn();
 			}
 			else{
 				aqData = xhr.responseText.trim();
@@ -43,6 +57,8 @@ function getIngredient(cat, step, elm){
 	
 	xhr.open('get','stage1.php?id=' + cat + "&step="+ step +"&funct=getSub" ,true);
 	xhr.send();
+	if(elm == null){
+	}
 	var animSample = document.getElementById("anim-sample");
 	var animOriginal = elm.childNodes[0].getElementsByTagName("img")[0];
 	var animDest = prevElem.getElementsByTagName("img")[0];
@@ -55,7 +71,9 @@ function getIngredient(cat, step, elm){
 	//animation
 	$('#anim-sample').animate({
 		left: rectDest.left +"px",
-		top: rectDest.top +"px"
+		top: rectDest.top +"px",
+		width: rectDest.width +"px",
+		height: rectDest.height +"px"
 	},500, function(){
 		animOver = true;
 		animSample.setAttribute("style", "display : none;");
@@ -94,6 +112,7 @@ function getIngredient(cat, step, elm){
 		}
 		if(dataAquired){
 			itemsGrid.innerHTML = aqData;
+				if(step == 4) animePrepRecBtn();
 		}
 		else{
 			itemsGrid.innerHTML = "<h2 class='sel-matching'>Matching your selections, please wait...</h2>";
@@ -104,12 +123,22 @@ function getIngredient(cat, step, elm){
 }
 
 function goToNextStage(itm){
-	document.getElementById("main_container").innerHTML = "";
+	$('#mi-slider').animate({
+		left: "-300px"
+	},700,function (){
+		var animRef = document.getElementById("mi-slider");
+		var rectRef = animRef.getBoundingClientRect();
+		document.getElementById("recipe-pane").style.left = (rectRef.left + rectRef.width) + "px";
+		$('#recipe-pane').animate({
+			opacity: 1.0
+		},500);
+	});
+	//document.getElementById("main_container").innerHTML = "";
 	var xhr = (window.XMLHttpRequest)? new XMLHttpRequest(): new activeXObject("Microsoft.XMLHTTP");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==4 && xhr.status==200){
-			document.getElementById("step_name").innerHTML = "Receipt for your cocktail";
-			document.getElementById("main_container").innerHTML = xhr.responseText.trim();
+			//document.getElementById("step_name").innerHTML = "Receipt for your cocktail";
+			//document.getElementById("main_container").innerHTML = xhr.responseText.trim();
 		}
 	}
 	xhr.open('get','stage2.php?id=' + itm ,true);
