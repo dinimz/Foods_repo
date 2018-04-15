@@ -196,7 +196,7 @@
 			</div><!--/ Codrops top bar -->
 			
 			<div class="main" id="main_container">
-				<div id="back_cover"><img src="images/back1.png" id="back_img"></div>
+				<div id="back_cover"><img src="images/back1.jpg" id="back_img"></div>
 				<div class="col-xs-9"> <!-- devide windows in to two, topic and selections-->
 					<div class="row-xs-2"> <!-- devide in to two, Topic-->
 						<header class="clearfix">
