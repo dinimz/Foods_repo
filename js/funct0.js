@@ -239,7 +239,7 @@ function resizeElements(){
 		
 		
 	}
-	catch{
+	catch(e){
 		console.log("ERR");
 	}
 }
