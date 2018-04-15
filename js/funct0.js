@@ -38,6 +38,7 @@ function animePrepRecBtn(){
 	var container = document.getElementById("mi-display-content");
 	var rectObj = obj.getBoundingClientRect();
 	var rectCont = container.getBoundingClientRect();
+	obj.style.top = ((rectCont.height - rectObj.height)/2) + "px";
 	$('#prep_rec').animate({
 		left: (rectCont.width - rectObj.width -40) + "px"
 	},700);
@@ -68,17 +69,18 @@ function getIngredient(cat, step, elm){
 	
 	xhr.open('get','stage1.php?id=' + cat + "&step="+ step +"&funct=getSub" ,true);
 	xhr.send();
-	if(elm == null){
-	}
+	
 	var animSample = document.getElementById("anim-sample");
-	var animOriginal = elm.childNodes[0].getElementsByTagName("img")[0];
 	var animDest = prevElem.getElementsByTagName("img")[0];
-	var rectOrg = animOriginal.getBoundingClientRect();
 	var rectDest = animDest.getBoundingClientRect();
-	animSample.setAttribute("src", animOriginal.getAttribute("src"));
-	animSample.setAttribute("style", "left : " + rectOrg.left + "px; " +
-									 "Top : " + rectOrg.top + "px; " +
-									 "display : block; position : absolute;");
+	if(elm != null){
+		var animOriginal = elm.childNodes[0].getElementsByTagName("img")[0];
+		var rectOrg = animOriginal.getBoundingClientRect();
+		animSample.setAttribute("src", animOriginal.getAttribute("src"));
+		animSample.setAttribute("style", "left : " + rectOrg.left + "px; " +
+								 "Top : " + rectOrg.top + "px; " +
+								 "display : block; position : absolute;");
+	}
 	//animation
 	$('#anim-sample').animate({
 		left: rectDest.left +"px",
@@ -93,6 +95,7 @@ function getIngredient(cat, step, elm){
 			case 1 : document.getElementById("step_name").innerHTML = "Choose your suppliment 1"; break;
 			case 2 : document.getElementById("step_name").innerHTML = "Choose your suppliment 2"; break;
 			case 3 : document.getElementById("step_name").innerHTML = "Choose your suppliment 3"; break;
+			case 4 : document.getElementById("step_name").innerHTML = "Let's make your recipe "; break;
 		}
 		
 		if(elm != null){  //set the image
@@ -150,6 +153,7 @@ function goToNextStage(itm){
 		$('#back_cover').animate({
 			height: rectBody.height + "px"
 		},400);
+		document.getElementById("step_name").innerHTML = "Your recipe is ready";
 		$('#recipe-pane').animate({
 			opacity: 1.0
 		},500, function(){

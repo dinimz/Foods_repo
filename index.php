@@ -29,10 +29,11 @@
 			
 			.base_liquor_label{
 				position: absolute;
-				color:Black;
+				color:white;
 				font-weight:bolder;
 				display:none;
 				transition: color 0.5s linear;
+				font-size: 20px;
 			}
 			
 			.base_liquor:hover .base_liquor_label{
@@ -112,7 +113,7 @@
 			
 			#prep_rec{
 				position: absolute;
-				top: 120px;
+				top: 200px;
 				cursor: pointer;
 			}
 			

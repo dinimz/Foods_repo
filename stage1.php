@@ -56,6 +56,24 @@ if($function == "getSub"){ //get sub categories
 }
 else{ //get main categories, load the whole page
 	$liquorList = getLiquor($id);
+	echo '<div id="recipe-pane" >
+		<img src="images/co_glass.png" style="width:400px">
+		<svg height="300" width="400" style="position: absolute; left: 148px; top: 35px;">
+		  <g style="opacity:0" class="recipe-row">
+			  <path fill="#323232" d="M150 0 L40 120 L150 50 L600 50 L600 0 Z"></path>
+			  <text class="recipe-label" x="170" y="30" fill="white" font-family="Verdana" font-size="18">ingredient 1</text>
+		  </g><g style="opacity:0" class="recipe-row">
+			  <path fill="#c2df00" d="M150 60 L90 140 L150 110 L600 110 L600 60 Z"></path>
+			  <text class="recipe-label" x="170" y="90" fill="white" font-family="Verdana" font-size="18">ingredient 1</text>
+		  </g><g style="opacity:0" class="recipe-row">
+			  <path fill="#ffc000" d="M150 120 L75 160 L150 170 L600 170 L600 120 Z"></path>
+			  <text class="recipe-label" x="170" y="150" fill="white" font-family="Verdana" font-size="18">ingredient 2</text>
+		  </g><g style="opacity:0" class="recipe-row">
+			  <path fill="#ff004e" d="M150 180 L45 200 L150 230 L600 230 L600 180 Z"></path>
+			  <text class="recipe-label" x="170" y="210" fill="white" font-family="Verdana" font-size="18">ingredient 3</text>
+		  </g>
+		</svg>
+	</div>';
 	echo "<div id='mi-slider' class='mi-slider'>";
 	echo '<table id="mi-display-content"><tr><td width="100px" align="right">';
 	echo '<div class="page_button" style="display:none" id="page-left-btn" onclick="prevPage();"><span class="fa fa-angle-left page_button_inner" style="margin-right: 30px;"></span></div>';
@@ -90,25 +108,7 @@ else{ //get main categories, load the whole page
 	echo "<li><a id='selection_preview_2'><img src='images/emptyPlace.png' alt='Suppliment 1'><h4>Not Selected</h4></a></li>";
 	echo "<li><a id='selection_preview_3'><img src='images/emptyPlace.png' alt='Suppliment 2'><h4>Not Selected</h4></a></li>";
 	echo "<li><a id='selection_preview_4'><img src='images/emptyPlace.png' alt='Suppliment 3'><h4>Not Selected</h4></a></li>";
-	echo '</ul></div>
-	<div id="recipe-pane" >
-		<img src="images/co_glass.png" style="width:400px">
-		<svg height="300" width="400" style="position: absolute; left: 148px; top: 35px;">
-		  <g style="opacity:0" class="recipe-row">
-			  <path fill="#323232" d="M150 0 L40 120 L150 50 L600 50 L600 0 Z"></path>
-			  <text class="recipe-label" x="170" y="30" fill="white" font-family="Verdana" font-size="18">ingredient 1</text>
-		  </g><g style="opacity:0" class="recipe-row">
-			  <path fill="#c2df00" d="M150 60 L90 140 L150 110 L600 110 L600 60 Z"></path>
-			  <text class="recipe-label" x="170" y="90" fill="white" font-family="Verdana" font-size="18">ingredient 1</text>
-		  </g><g style="opacity:0" class="recipe-row">
-			  <path fill="#ffc000" d="M150 120 L75 160 L150 170 L600 170 L600 120 Z"></path>
-			  <text class="recipe-label" x="170" y="150" fill="white" font-family="Verdana" font-size="18">ingredient 2</text>
-		  </g><g style="opacity:0" class="recipe-row">
-			  <path fill="#ff004e" d="M150 180 L45 200 L150 230 L600 230 L600 180 Z"></path>
-			  <text class="recipe-label" x="170" y="210" fill="white" font-family="Verdana" font-size="18">ingredient 3</text>
-		  </g>
-		</svg>
-	</div>';
+	echo '</ul></div>';
 }
 
 function getLiquor($id){
