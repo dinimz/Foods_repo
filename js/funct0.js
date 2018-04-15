@@ -2,7 +2,10 @@ var pageIndex = 0;
 var dataAquired = false;
 var animOver = false;
 var aqData = "";
+var amount = [60,60,60,60];
+var units = ["ml", "ml", "ml", "g"];
 function getCategory(cat,elem){
+	var selectionsTag = document.getElementById("selections");
 	var xhr = (window.XMLHttpRequest)? new XMLHttpRequest(): new activeXObject("Microsoft.XMLHTTP");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==4 && xhr.status==200){
@@ -15,7 +18,15 @@ function getCategory(cat,elem){
 	$('#selections').animate({
 		opacity: "0"
 	},500, function(){
-		document.getElementById("selections").innerHTML = "<h2 class='sel-matching'>Aquiring data, please wait...</h2>";
+		selectionsTag.removeAttribute("style");
+		document.getElementById("selections").innerHTML = "<h2 class='sel-matching'><div class='loader'></div></h2>";
+		var rectBody = document.getElementById("body").getBoundingClientRect();
+		var rectSpin = document.getElementsByClassName("loader")[0].getBoundingClientRect();
+		document.getElementById("back_cover").setAttribute("style", "overflow:hidden; height: " + rectBody.height + "px");
+		document.getElementsByClassName("loader")[0].setAttribute("style", "margin-top: " + ((rectBody.height - rectSpin.height) / 2) + "px; margin-left: " + ((rectBody.width - rectSpin.width) / 2) + "px;");
+		$('#back_cover').animate({
+			height: "100px"
+		},400);
 		$('#selections').animate({
 			opacity: "1"
 		},200);
@@ -112,10 +123,13 @@ function getIngredient(cat, step, elm){
 		}
 		if(dataAquired){
 			itemsGrid.innerHTML = aqData;
-				if(step == 4) animePrepRecBtn();
+			if(step == 4) animePrepRecBtn();
 		}
 		else{
-			itemsGrid.innerHTML = "<h2 class='sel-matching'>Matching your selections, please wait...</h2>";
+			itemsGrid.innerHTML = "<div class='loader'></div>";
+			var rectBody = document.getElementById("selections").getBoundingClientRect();
+			var rectSpin = document.getElementsByClassName("loader")[0].getBoundingClientRect();
+			itemsGrid.innerHTML = "<div class='loader' style='border: 8px solid #f3f3f3; border-top: 8px solid #3498db; height: 70px; width: 70px; margin-top: 50px; margin-left: " + ((rectBody.width - rectSpin.width) / 2) + "px;'></div>";
 		}
 	});
 	
@@ -123,16 +137,44 @@ function getIngredient(cat, step, elm){
 }
 
 function goToNextStage(itm){
+	var rectSlider = document.getElementById("selections").getBoundingClientRect();
 	$('#mi-slider').animate({
-		left: "-300px"
+		left: "-" + rectSlider.width + "px"
 	},700,function (){
 		var animRef = document.getElementById("mi-slider");
+		animRef.style.left= "-300px";
+		animRef.innerHTML = "";
 		var rectRef = animRef.getBoundingClientRect();
 		document.getElementById("recipe-pane").style.left = (rectRef.left + rectRef.width) + "px";
+		var rectBody = document.getElementById("body").getBoundingClientRect();
+		$('#back_cover').animate({
+			height: rectBody.height + "px"
+		},400);
 		$('#recipe-pane').animate({
 			opacity: 1.0
-		},500);
+		},500, function(){
+			$('.recipe-row').eq(3).animate({
+				opacity: 1.0
+			},400, function(){
+				$('.recipe-row').eq(2).animate({
+					opacity: 1.0
+				},400, function(){
+					$('.recipe-row').eq(1).animate({
+						opacity: 1.0
+					},400, function(){
+						$('.recipe-row').eq(0).animate({
+							opacity: 1.0
+						},400);
+					});
+				});
+			});
+		});
 	});
+	var recipeLabels = document.getElementsByClassName("recipe-label");
+	for(k = 3; k >= 0 ; k--){
+		var supName = document.getElementById("selection_preview_" + (4 - k)).getElementsByTagName("h4")[0].innerHTML;
+		recipeLabels[k].innerHTML = amount[3 - k] + units[3 - k] + " of " + supName;
+	}
 	//document.getElementById("main_container").innerHTML = "";
 	var xhr = (window.XMLHttpRequest)? new XMLHttpRequest(): new activeXObject("Microsoft.XMLHTTP");
 	xhr.onreadystatechange = function(){
@@ -177,4 +219,23 @@ function prevPage(){
 	for(i = 0; i < allPages.length; i++)
 		allPages[i].classList.remove("selected-page");
 	allPages[pageIndex].classList.add("selected-page");
+}
+
+function resizeElements(){
+	try{
+		var imgTag = document.getElementById("back_img");
+		var bodyRect = document.getElementById("body").getBoundingClientRect();
+		var selectionsTag = document.getElementById("selections");
+		var selectionsRect = selectionsTag.getBoundingClientRect();
+		var imgRect = imgTag.getBoundingClientRect();
+		console.log(bodyRect.height, bodyRect.width);
+		imgTag.setAttribute("style", "top : " + (bodyRect.height - imgRect.height) + "px");
+		selectionsTag.setAttribute("style", "margin-top : " + (bodyRect.height - selectionsRect.height - 350) + "px");
+
+		
+		
+	}
+	catch{
+		console.log("ERR");
+	}
 }

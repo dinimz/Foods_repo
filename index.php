@@ -144,10 +144,48 @@
 				top: 70px;
 			}
 			
+			#back_img, #back_cover{
+				position: absolute;
+				left: 0px;
+				width: 100%;
+			}
 			
+			#back_cover{
+				
+			}
+			
+			#step_name{
+				color: white;
+			}
+			
+			#body{
+				height:100%;
+				overflow:hidden;
+			}
+			
+			.loader {
+			  border: 16px solid #f3f3f3;
+			  border-radius: 50%;
+			  border-top: 16px solid #3498db;
+			  width: 120px;
+			  height: 120px;
+			  -webkit-animation: spin 2s linear infinite; /* Safari */
+			  animation: spin 2s linear infinite;
+			}
+
+			/* Safari */
+			@-webkit-keyframes spin {
+			  0% { -webkit-transform: rotate(0deg); }
+			  100% { -webkit-transform: rotate(360deg); }
+			}
+
+			@keyframes spin {
+			  0% { transform: rotate(0deg); }
+			  100% { transform: rotate(360deg); }
+			}
 		</style>
 	</head>
-	<body>
+	<body id="body"  onresize="resizeElements();">
 		<div class="container">	
 
 			<!-- Codrops top bar -->
@@ -157,10 +195,11 @@
 			</div><!--/ Codrops top bar -->
 			
 			<div class="main" id="main_container">
+				<div id="back_cover"><img src="images/back1.png" id="back_img"></div>
 				<div class="col-xs-9"> <!-- devide windows in to two, topic and selections-->
 					<div class="row-xs-2"> <!-- devide in to two, Topic-->
 						<header class="clearfix">
-							<h1>Let's Make Your Cocktail <span id="step_name">Choose your base liquor</span></h1>
+							<h1 style="color: white;">Let's Make Your Cocktail <span id="step_name">Choose your base liquor</span></h1>
 						</header>
 					</div>
 					<div class="row-xs-7" id="selections"> <!-- devide in to two, Slections-->
@@ -194,6 +233,9 @@
 				<div class="col-xs-3"  id='selections_grid'> <!-- devide window in to two, All selections-->
 					
 				</div>
+				<script>
+					resizeElements();
+				</script>
 			</div>
 		</div><!-- /container -->
 		<script src="js/jquery.js"></script>

@@ -93,12 +93,20 @@ else{ //get main categories, load the whole page
 	echo '</ul></div>
 	<div id="recipe-pane" >
 		<img src="images/co_glass.png" style="width:400px">
-		<svg height="210" width="400" style="/*! float: left; */position: absolute;left: 220px;top: 70px;">
-		  <path fill="green" d="M150 0 L0 120 L150 60 L600 60 L600 0 Z"></path>
-		  <text x="170" y="35" fill="white" font-family="Verdana" font-size="18">I love SVG!</text>
-		  
-		  <path fill="red" d="M150 60 L0 150 L150 120 L600 120 L600 60 Z"></path>
-		  <text x="170" y="35" fill="white" font-family="Verdana" font-size="18">I love SVG!</text>
+		<svg height="300" width="400" style="position: absolute; left: 148px; top: 35px;">
+		  <g style="opacity:0" class="recipe-row">
+			  <path fill="#323232" d="M150 0 L40 120 L150 50 L600 50 L600 0 Z"></path>
+			  <text class="recipe-label" x="170" y="30" fill="white" font-family="Verdana" font-size="18">ingredient 1</text>
+		  </g><g style="opacity:0" class="recipe-row">
+			  <path fill="#c2df00" d="M150 60 L90 140 L150 110 L600 110 L600 60 Z"></path>
+			  <text class="recipe-label" x="170" y="90" fill="white" font-family="Verdana" font-size="18">ingredient 1</text>
+		  </g><g style="opacity:0" class="recipe-row">
+			  <path fill="#ffc000" d="M150 120 L75 160 L150 170 L600 170 L600 120 Z"></path>
+			  <text class="recipe-label" x="170" y="150" fill="white" font-family="Verdana" font-size="18">ingredient 2</text>
+		  </g><g style="opacity:0" class="recipe-row">
+			  <path fill="#ff004e" d="M150 180 L45 200 L150 230 L600 230 L600 180 Z"></path>
+			  <text class="recipe-label" x="170" y="210" fill="white" font-family="Verdana" font-size="18">ingredient 3</text>
+		  </g>
 		</svg>
 	</div>';
 }
